@@ -1,3 +1,20 @@
+//   Copyright (C) 2022 Ashwin Godbole
+//
+//   This file is part of coloff.
+//
+//   coloff is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   coloff is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of the GNU General Public License
+//   along with coloff. If not, see <https://www.gnu.org/licenses/>.
+
 package tools
 
 import (
@@ -125,7 +142,6 @@ func (b *BooleanLiteral) String() string {
 // StringLiteral : to store string literals
 type StringLiteral struct {
 	Token Token
-	Value string
 }
 
 func (b *StringLiteral) expressionNode() {}
@@ -210,34 +226,25 @@ func (e *ExpressionStatement) String() string {
 	return ""
 }
 
-/*-------------------------------------------------------------------*/
-
-// PrefixExpression : Expressions used as statements
 type PrefixExpression struct {
-	Token           Token // holds the prefix n
-	Operator        string
+	Token           Token
 	RightExpression Expression
 }
 
 func (pe *PrefixExpression) expressionNode() {}
 
-// TokenLiteral : ExpressionStatement
 func (pe *PrefixExpression) TokenLiteral() string {
 	return pe.Token.Literal
 }
 
 func (pe *PrefixExpression) String() string {
 	var str bytes.Buffer
-	str.WriteString("(" + pe.Operator + " " + pe.RightExpression.String() + ")")
+	str.WriteString("(" + pe.Token.Literal + " " + pe.RightExpression.String() + ")")
 	return str.String()
 }
 
-/*-------------------------------------------------------------------*/
-
-// InfixExpression : Expressions used as statements
 type InfixExpression struct {
-	Token           Token // holds the prefix n
-	Operator        string
+	Token           Token
 	LeftExpression  Expression
 	RightExpression Expression
 }
@@ -251,7 +258,7 @@ func (ie *InfixExpression) TokenLiteral() string {
 
 func (ie *InfixExpression) String() string {
 	var str bytes.Buffer
-	str.WriteString("(" + ie.LeftExpression.String() + " " + ie.Operator + " " + ie.RightExpression.String() + ")")
+	str.WriteString("(" + ie.LeftExpression.String() + " " + ie.Token.Literal + " " + ie.RightExpression.String() + ")")
 	return str.String()
 }
 

@@ -7,7 +7,7 @@ import (
 
 func main() {
     text := `
-def hello = 123.44
+def hello = 123.44 + 23.1 * 10
 def bye = "hello"
 `
     fmt.Println("Source code :", text)
@@ -15,11 +15,8 @@ def bye = "hello"
     l := tools.CreateLexerState(text)
     p := tools.CreateParserState(l)
 
-    // t := tools.CreateLexerState(text).Lex()
-    // for i:=0; i<len(t); i++ {
-    //     fmt.Println(t[i].Line, t[i].Literal, t[i].TokType.String())
-    // }
-    
     tree := p.Parse()
-    fmt.Println("tree : ", tree)
+    for _, i := range(tree.Statements) {
+        fmt.Println(i.String())
+    }
 }

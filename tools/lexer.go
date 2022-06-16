@@ -1,3 +1,20 @@
+//   Copyright (C) 2022 Ashwin Godbole
+//
+//   This file is part of coloff.
+//
+//   coloff is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU General Public License as published by
+//   the Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   coloff is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//   GNU General Public License for more details.
+//
+//   You should have received a copy of the GNU General Public License
+//   along with coloff. If not, see <https://www.gnu.org/licenses/>.
+
 package tools
 
 import (
@@ -51,7 +68,7 @@ func (l *Lexer) NextToken() Token {
 	l.consumeWhiteSpace()
 	switch l.Ch {
 	case '\n':
-		token = NewToken(EOL, "", l.line)
+		token = NewToken(EOL, "<nl>", l.line)
 		l.line++
 	case ',':
 		token = NewToken(COM, ",", l.line)
@@ -174,7 +191,9 @@ func (l *Lexer) readWord() Token {
 		end++
 		l.ReadChar()
 	}
+    // println("LOG:", l.Source[start : end+1])
 	word := l.Source[start : end+1]
+    // println("LOG:", word, Keywords[word])
 	l.CurrPos = end
 	l.updateChar()
 
@@ -188,6 +207,7 @@ func (l *Lexer) readWord() Token {
 }
 
 func (l *Lexer) readString() Token {
+    l.ReadChar()
 	start := l.CurrPos
 	end := l.CurrPos
 
@@ -207,7 +227,7 @@ func (l *Lexer) readString() Token {
 	}
 	l.CurrPos = end
 	l.updateChar()
-	return NewToken(STR, l.Source[start+1:end+1], l.line)
+	return NewToken(STR, l.Source[start:end], l.line)
 }
 
 func (l *Lexer) readComment() Token {
@@ -229,7 +249,6 @@ func (l *Lexer) Lex() []Token {
 	var tokens []Token
 	for l.Ch != 0 {
 		tokens = append(tokens, l.NextToken())
-		l.ReadChar()
 	}
 	// pad tokens with an EOF at the end in case the input does not end in EOF
 	if tokens[len(tokens)-1].TokType != EOF {
