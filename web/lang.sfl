@@ -1,0 +1,41 @@
+# @[<](../index.html) Coloff Language Syntax
+
+### variable declarations
+`
+    def var_name = value
+`
+
+### return statements
+`
+    return value
+`
+
+### conditionals
+`
+    if (condition) {
+
+    }
+
+
+    if (condition) {
+
+    } else if (condition) {
+
+    } else {
+
+    }
+`
+
+### loops
+`
+    loop (condition) {
+
+    }
+`
+
+### functions
+`
+    def name = function (foo, bar, baz) {
+
+    }
+`
