@@ -155,7 +155,7 @@ var Keywords map[string]TokenType = map[string]TokenType {
 	"if"    : IFK,
 	"else"  : ELK,
 	"loop"  : LPK,
-	"func"  : FNK,
+	"function"  : FNK,
 	"return": RET,
 }
 

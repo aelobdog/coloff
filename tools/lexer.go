@@ -130,6 +130,10 @@ func (l *Lexer) NextToken() Token {
 		token = NewToken(LOR, "|", l.line)
 	case 0:
 		token = NewToken(EOF, "", l.line)
+    case '\'':
+        l.ReadChar()
+        token = NewToken(CHR, string(l.Ch), l.line)
+        l.ReadChar()
 	default:
 		if IsDigit(l.Ch) {
 			token = l.readNumber()
@@ -206,6 +210,7 @@ func (l *Lexer) readWord() Token {
 	return NewToken(IDN, word, l.line)
 }
 
+// FIXME: strings currently treat escape sequences as 2 individial characters
 func (l *Lexer) readString() Token {
     l.ReadChar()
 	start := l.CurrPos

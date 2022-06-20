@@ -1,0 +1,10 @@
+def start=0
+def end=10
+
+loop (start<end) {
+    start = start + 1
+}
+
+def greet = function (hello) {
+    return "hello, world\n"
+}
